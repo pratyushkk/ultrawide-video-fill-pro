@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>UltraWide Video Test Page</title>
+  <style>
+    body {
+      background: #0f0f14;
+      color: #e0e0e0;
+      font-family: system-ui, -apple-system, sans-serif;
+      margin: 0;
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 24px;
+    }
+    h1 {
+      margin: 0;
+      font-size: 20px;
+      color: #818cf8;
+    }
+    .info {
+      font-size: 13px;
+      color: #9ca3af;
+    }
+
+    /* 21:9 Player Container (840x360 = 21:9 ratio) */
+    .player-container {
+      width: 840px;
+      height: 360px;
+      background: #000;
+      position: relative;
+      overflow: hidden;
+      border: 2px solid #374151;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.5);
+    }
+
+    /* Video element (16:9 inside 21:9 container = 640x360, leaving 100px black bars on each side) */
+    video {
+      width: 640px;
+      height: 360px;
+      background: #1e1e2f;
+      display: block;
+    }
+
+    /* Simulated Player Controls overlay */
+    .player-controls {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 40px;
+      background: linear-gradient(transparent, rgba(0,0,0,0.8));
+      display: flex;
+      align-items: center;
+      padding: 0 16px;
+      gap: 12px;
+      z-index: 10;
+    }
+    .player-controls button {
+      background: rgba(255,255,255,0.2);
+      border: none;
+      color: white;
+      padding: 4px 12px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 12px;
+    }
+
+    .secondary-section {
+      width: 840px;
+      display: none;
+      margin-top: 16px;
+    }
+    .secondary-container {
+      width: 480px;
+      height: 270px;
+      background: #000;
+      position: relative;
+      overflow: hidden;
+      border: 1px solid #4b5563;
+    }
+    .secondary-container video {
+      width: 100%;
+      height: 100%;
+    }
+
+    .test-controls {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .test-controls button {
+      background: #252836;
+      border: 1px solid #3f4458;
+      color: #e0e0e0;
+      padding: 8px 16px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 13px;
+    }
+    .test-controls button:hover {
+      background: #2e3346;
+    }
+  </style>
+</head>
+<body>
+  <h1>UltraWide Video Test Lab</h1>
+  <div class="info">
+    Simulated 21:9 display (840×360) playing 16:9 video (640×360) with 100px pillarbox bars on each side.
+  </div>
+
+  <div class="player-container html5-video-player" id="main-player">
+    <video id="test-video" autoplay loop muted playsinline></video>
+    <div class="player-controls">
+      <button id="btn-play">Play/Pause</button>
+      <button id="btn-fullscreen">Fullscreen</button>
+      <span style="font-size: 11px; color: #ccc;">Player UI Overlay (should never be hidden)</span>
+    </div>
+  </div>
+
+  <div class="test-controls">
+    <button id="btn-toggle-second">Add Second Video</button>
+    <button id="btn-simulate-spa">Simulate SPA Page Change</button>
+    <button id="btn-replace-video">Replace Video Element</button>
+  </div>
+
+  <div class="secondary-section" id="second-section">
+    <h3>Second Video (Picture-in-Picture / Ad)</h3>
+    <div class="secondary-container" id="second-container">
+    </div>
+  </div>
+
+  <script>
+    // Generate real animated video frames using HTML5 Canvas & MediaStream
+    function setupVideoStream(videoId, label, color) {
+      const canvas = document.createElement('canvas');
+      canvas.width = 640;
+      canvas.height = 360;
+      const ctx = canvas.getContext('2d');
+      let frame = 0;
+
+      function draw() {
+        frame++;
+        // Gradient background
+        const grad = ctx.createLinearGradient(0, 0, 640, 360);
+        grad.addColorStop(0, color);
+        grad.addColorStop(1, '#0f172a');
+        ctx.fillStyle = grad;
+        ctx.fillRect(0, 0, 640, 360);
+
+        // Aspect ratio grid lines
+        ctx.strokeStyle = 'rgba(255, 255, 255, 0.2)';
+        ctx.lineWidth = 1;
+        for (let x = 0; x < 640; x += 80) {
+          ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, 360); ctx.stroke();
+        }
+        for (let y = 0; y < 360; y += 45) {
+          ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(640, y); ctx.stroke();
+        }
+
+        // Bouncing circle
+        const cx = 320 + Math.sin(frame * 0.05) * 200;
+        const cy = 180 + Math.cos(frame * 0.05) * 100;
+        ctx.fillStyle = '#f59e0b';
+        ctx.beginPath();
+        ctx.arc(cx, cy, 30, 0, Math.PI * 2);
+        ctx.fill();
+
+        // Label and time
+        ctx.fillStyle = '#ffffff';
+        ctx.font = 'bold 20px system-ui';
+        ctx.fillText(label, 40, 60);
+        ctx.font = '14px system-ui';
+        ctx.fillText('Source AR: 16:9 (640x360) | Frame: ' + frame, 40, 90);
+        ctx.fillText('Timestamp: ' + new Date().toISOString().substring(11, 23), 40, 115);
+
+        requestAnimationFrame(draw);
+      }
+      draw();
+
+      const stream = canvas.captureStream(30);
+      const video = document.getElementById(videoId);
+      if (video) {
+        video.srcObject = stream;
+        video.play().catch(() => {});
+      }
+    }
+
+    setupVideoStream('test-video', 'Primary Video (16:9)', '#4338ca');
+
+    // Controls
+    const video = document.getElementById('test-video');
+    document.getElementById('btn-play').onclick = () => {
+      if (video.paused) video.play(); else video.pause();
+    };
+    document.getElementById('btn-fullscreen').onclick = () => {
+      const player = document.getElementById('main-player');
+      if (document.fullscreenElement) {
+        document.exitFullscreen();
+      } else {
+        player.requestFullscreen().catch(() => {});
+      }
+    };
+
+    // Second video toggle
+    document.getElementById('btn-toggle-second').onclick = () => {
+      const section = document.getElementById('second-section');
+      const container = document.getElementById('second-container');
+      const isVisible = section.style.display === 'block';
+      section.style.display = isVisible ? 'none' : 'block';
+      if (!isVisible && !document.getElementById('second-video')) {
+        const v = document.createElement('video');
+        v.id = 'second-video';
+        v.loop = true;
+        v.muted = true;
+        v.playsInline = true;
+        v.style.width = '100%';
+        v.style.height = '100%';
+        container.appendChild(v);
+        setupVideoStream('second-video', 'Secondary Video (16:9)', '#059669');
+      }
+    };
+
+    // SPA simulation
+    document.getElementById('btn-simulate-spa').onclick = () => {
+      history.pushState({}, '', '/watch?v=new_test_video_' + Date.now());
+      window.dispatchEvent(new CustomEvent('yt-navigate-finish'));
+    };
+
+    // Replace video element
+    document.getElementById('btn-replace-video').onclick = () => {
+      const oldVideo = document.getElementById('test-video');
+      const parent = oldVideo.parentElement;
+      const newVideo = document.createElement('video');
+      newVideo.id = 'test-video';
+      newVideo.autoplay = true;
+      newVideo.loop = true;
+      newVideo.muted = true;
+      newVideo.playsInline = true;
+      newVideo.style.width = '640px';
+      newVideo.style.height = '360px';
+      parent.replaceChild(newVideo, oldVideo);
+      setupVideoStream('test-video', 'Replaced Video (16:9)', '#be185d');
+    };
+  </script>
+</body>
+</html>

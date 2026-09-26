@@ -1,0 +1,20 @@
+# Dependencies
+node_modules/
+.pnp
+.pnp.js
+
+# Build Outputs
+dist/
+build/
+
+# Package archives (keep release/ store-assets, ignore local test zip if any)
+*.log
+*.local
+
+# Environment & IDE
+.env
+.env.local
+.vscode/
+.idea/
+Thumbs.db
+Desktop.ini
