@@ -45,8 +45,9 @@ All submission files are already compiled, packaged, and ready inside your works
 
 ### Step 3: Fill in "Properties"
 - **Category:** `Photos & video` (Secondary alternative: `Entertainment`)
-- **Support Contact / URL:** Your support email or GitHub repository URL (e.g., `https://github.com/your-username/ultrawide-video-fill-pro`)
-- **Privacy Policy URL:** Link to your hosted privacy policy (e.g. your GitHub raw/pages URL for `PRIVACY_POLICY.html` or `https://github.com/your-username/ultrawide-video-fill-pro/blob/main/PRIVACY_POLICY.md`)
+- **Support Contact / URL:** `https://github.com/pratyushkk/ultrawide-video-fill-pro/issues`
+- **Privacy Policy URL:** `https://github.com/pratyushkk/ultrawide-video-fill-pro/blob/main/PRIVACY_POLICY.md`
+- **Website URL (Optional):** `https://github.com/pratyushkk/ultrawide-video-fill-pro`
 - **Content Rating:** Everyone / General Audience
 - **Adult content:** No
 

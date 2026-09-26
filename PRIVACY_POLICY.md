@@ -49,5 +49,5 @@ UltraWide Video Fill Pro requests the following browser permissions solely to fu
 We may update this Privacy Policy from time to time. Any changes will be reflected directly in this document and on our repository.
 
 If you have questions regarding this policy or the extension's privacy practices, please contact us or open an issue on our project support page:
-- **Email:** support@ultrawidevideofill.com
-- **Support / GitHub Issues:** https://github.com/ultrawide-video-fill-pro/support
+- **GitHub Repository:** https://github.com/pratyushkk/ultrawide-video-fill-pro
+- **Support / Issues:** https://github.com/pratyushkk/ultrawide-video-fill-pro/issues
