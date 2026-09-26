@@ -17,4 +17,5 @@ build/
 .vscode/
 .idea/
 Thumbs.db
-Desktop.ini
+# Local Store Submission Notes
+MICROSOFT_EDGE_STORE_GUIDE.md
