@@ -1,10 +1,14 @@
 # UltraWide Video Fill Pro 🎬🖥️
 
 [![Manifest V3](https://img.shields.io/badge/Manifest-V3-brightgreen.svg)](https://developer.chrome.com/docs/extensions/mv3/intro/)
+[![Microsoft Edge Add-ons](https://img.shields.io/badge/Microsoft%20Edge%20Add--ons-Get%20it%20now-0078D7?logo=microsoft-edge&logoColor=white)](https://microsoftedge.microsoft.com/addons/detail/ultrawide-video-fill-pro/kllbjjefnjodgoaglaghcakajfbjmpnm)
+[![Website](https://img.shields.io/badge/Website-Official%20Site-06b6d4)](https://pratyushkk.github.io/ultrawide-video-fill-pro-site/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![GPU-Accelerated](https://img.shields.io/badge/GPU-WebGPU%20%7C%20WebGL2-orange.svg)](#)
 
 > **UltraWide Video Fill Pro** eliminates black bars (pillarboxing and letterboxing) on 21:9 and 32:9 ultrawide monitors with one click. Features GPU-accelerated video sharpening, dynamic HDR Boost, global brightness control, and DRM-safe playback protection.
+> 
+> **[🌐 Official Website](https://pratyushkk.github.io/ultrawide-video-fill-pro-site/)** | **[📥 Install from Microsoft Edge Add-ons](https://microsoftedge.microsoft.com/addons/detail/ultrawide-video-fill-pro/kllbjjefnjodgoaglaghcakajfbjmpnm)**
 
 ---
 
@@ -31,7 +35,7 @@
 
 ### 2. Clone & Install Dependencies
 ```bash
-git clone https://github.com/<your-username>/ultrawide-video-fill-pro.git
+git clone https://github.com/pratyushkk/ultrawide-video-fill-pro.git
 cd ultrawide-video-fill-pro
 npm install
 ```
